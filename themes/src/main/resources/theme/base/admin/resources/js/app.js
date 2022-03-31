@@ -13,9 +13,9 @@ var currentRealm = null;
 angular.element(document).ready(function () {
     var keycloakAuth = new Keycloak(consoleBaseUrl + 'config');
 
-    function whoAmI(success, error) {
+    function whoAmI(realm, success, error) {
         var req = new XMLHttpRequest();
-        req.open('GET', consoleBaseUrl + 'whoami', true);
+        req.open('GET', consoleBaseUrl + 'whoami?realm=' + encodeURIComponent(realm)', true);
         req.setRequestHeader('Accept', 'application/json');
         req.setRequestHeader('Authorization', 'bearer ' + keycloakAuth.token);
 
@@ -82,8 +82,16 @@ angular.element(document).ready(function () {
         location.reload();
     }
 
-    auth.refreshPermissions = function(success, error) {
-        whoAmI(function(data) {
+    auth.refreshPermissions = function(realm, success, error) {
+        whoAmI(realm, function(data) {
+            // Add already existing realm_access to data object, before it is set to auth.user
+            if (auth.user && auth.user.userId === data.userId && auth.user.realm === data.realm) {
+                Object.keys(auth.user['realm_access'])
+                    .filter(r => r !== realm)
+                    .forEach(r => {
+                        data['realm_access'][r] = auth.user['realm_access'][r];
+                    });
+            }
             auth.user = data;
             auth.loggedIn = true;
             auth.hasAnyAccess = hasAnyAccess(data);
@@ -101,7 +109,7 @@ angular.element(document).ready(function () {
     keycloakAuth.init({ onLoad: 'login-required', pkceMethod: 'S256' }).then(function () {
         auth.authz = keycloakAuth;
 
-        whoAmI(function(data) {
+        whoAmI(keycloakAuth.realm, function(data) {
             auth.user = data;
             auth.loggedIn = true;
             auth.hasAnyAccess = hasAnyAccess(data);
@@ -2690,7 +2698,7 @@ module.directive('kcNoReservedChars', function (Notifications, $translate) {
     return function($scope, element) {
         element.bind("keypress", function(event) {
             var keyPressed = String.fromCharCode(event.which || event.keyCode || 0);
-            
+
             // ] and ' can not be used inside a character set on POSIX and GNU
             if (keyPressed.match('[:/?#[@!$&()*+,;=]') || keyPressed === ']' || keyPressed === '\'') {
                 event.preventDefault();
@@ -3022,7 +3030,7 @@ module.controller('RoleSelectorModalCtrl', function($scope, realm, config, confi
     }
 
     clientSelectControl($scope, realm.realm, Client);
-    
+
     $scope.selectedClient = null;
 
     $scope.changeClient = function(client) {
@@ -3070,7 +3078,7 @@ module.controller('ProviderConfigCtrl', function ($modal, $scope, $route, Compon
                     $scope.selectedClient.text = $scope.selectedClient.clientId;
                 }
             });
-        }   
+        }
     }
 
     $scope.openRoleSelector = function (configName, config) {
@@ -3275,7 +3283,7 @@ module.controller('ComponentConfigCtrl', function ($modal, $scope, $route, Clien
                     $scope.selectedClient.text = $scope.selectedClient.clientId;
                 }
             });
-        }   
+        }
     }
 
     $scope.changeClient = function(configName, config, client) {
@@ -3558,12 +3566,12 @@ module.controller('PagingCtrl', function ($scope) {
 // Provides a component for injection with utility methods for manipulating strings
 module.factory('KcStrings', function () {
     var instance = {};
-    
+
     // some IE versions do not support string.endsWith method, this method should be used as an alternative for cross-browser compatibility
     instance.endsWith = function(source, suffix) {
         return source.indexOf(suffix, source.length - suffix.length) !== -1;
     };
-    
+
     return instance;
 });
 
