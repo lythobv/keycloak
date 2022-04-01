@@ -15,7 +15,7 @@ angular.element(document).ready(function () {
 
     function whoAmI(realm, success, error) {
         var req = new XMLHttpRequest();
-        req.open('GET', consoleBaseUrl + 'whoami?realm=' + encodeURIComponent(realm)', true);
+        req.open('GET', consoleBaseUrl + 'whoami?realm=' + encodeURIComponent(realm), true);
         req.setRequestHeader('Accept', 'application/json');
         req.setRequestHeader('Authorization', 'bearer ' + keycloakAuth.token);
 
