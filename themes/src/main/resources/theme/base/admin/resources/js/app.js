@@ -165,7 +165,7 @@ module.config(['$translateProvider', function($translateProvider) {
 // Change for upgrade to AngularJS 1.6
 // See https://github.com/angular/angular.js/commit/aa077e81129c740041438688dff2e8d20c3d7b52
 module.config(['$locationProvider', function($locationProvider) {
-  $locationProvider.hashPrefix('');
+    $locationProvider.hashPrefix('');
 }]);
 
 module.config([ '$routeProvider', function($routeProvider) {
@@ -546,20 +546,20 @@ module.config([ '$routeProvider', function($routeProvider) {
             controller : 'RealmKeysCtrl'
         })
         .when('/realms/:realm/keys/disabled', {
-                    templateUrl : resourceUrl + '/partials/realm-keys-disabled.html',
-                    resolve : {
-                        realm : function(RealmLoader) {
-                            return RealmLoader();
-                        },
-                        serverInfo : function(ServerInfoLoader) {
-                            return ServerInfoLoader();
-                        },
-                        keys: function(RealmKeysLoader) {
-                            return RealmKeysLoader();
-                        }
-                    },
-                    controller : 'RealmKeysCtrl'
-                })
+            templateUrl : resourceUrl + '/partials/realm-keys-disabled.html',
+            resolve : {
+                realm : function(RealmLoader) {
+                    return RealmLoader();
+                },
+                serverInfo : function(ServerInfoLoader) {
+                    return ServerInfoLoader();
+                },
+                keys: function(RealmKeysLoader) {
+                    return RealmKeysLoader();
+                }
+            },
+            controller : 'RealmKeysCtrl'
+        })
         .when('/realms/:realm/keys/providers', {
             templateUrl : resourceUrl + '/partials/realm-keys-providers.html',
             resolve : {
@@ -1042,16 +1042,16 @@ module.config([ '$routeProvider', function($routeProvider) {
             controller : 'RoleDetailCtrl'
         })
         .when('/realms/:realm/roles/:role/users', {
-        	templateUrl : resourceUrl + '/partials/realm-role-users.html',
-        	resolve : {
-        		realm : function(RealmLoader) {
-        			return RealmLoader();
-        		},
-        		role : function(RoleLoader) {
-        			return RoleLoader();
-        		}
-        	},
-        	controller : 'RoleMembersCtrl'
+            templateUrl : resourceUrl + '/partials/realm-role-users.html',
+            resolve : {
+                realm : function(RealmLoader) {
+                    return RealmLoader();
+                },
+                role : function(RoleLoader) {
+                    return RoleLoader();
+                }
+            },
+            controller : 'RoleMembersCtrl'
         })
         .when('/realms/:realm/roles', {
             templateUrl : resourceUrl + '/partials/role-list.html',
@@ -1682,7 +1682,7 @@ module.config([ '$routeProvider', function($routeProvider) {
                     return {};
                 },
                 flows : function(AuthenticationFlowsLoader) {
-                     return AuthenticationFlowsLoader();
+                    return AuthenticationFlowsLoader();
                 },
                 serverInfo : function(ServerInfoLoader) {
                     return ServerInfoLoader();
@@ -1818,7 +1818,7 @@ module.config([ '$routeProvider', function($routeProvider) {
             },
             controller : 'ClientImportCtrl'
         })
-       .when('/realms/:realm/client-stores', {
+        .when('/realms/:realm/client-stores', {
             templateUrl : resourceUrl + '/partials/client-storage-list.html',
             resolve : {
                 realm : function(RealmLoader) {
@@ -1849,26 +1849,26 @@ module.config([ '$routeProvider', function($routeProvider) {
             controller : 'GenericClientStorageCtrl'
         })
         .when('/create/client-storage/:realm/providers/:provider', {
-             templateUrl : resourceUrl + '/partials/client-storage-generic.html',
-             resolve : {
-                 realm : function(RealmLoader) {
-                     return RealmLoader();
-                 },
-                 instance : function() {
-                     return {
+            templateUrl : resourceUrl + '/partials/client-storage-generic.html',
+            resolve : {
+                realm : function(RealmLoader) {
+                    return RealmLoader();
+                },
+                instance : function() {
+                    return {
 
-                     };
-                 },
-                 providerId : function($route) {
-                     return $route.current.params.provider;
-                 },
-                 serverInfo : function(ServerInfoLoader) {
-                     return ServerInfoLoader();
-                 }
-             },
-             controller : 'GenericClientStorageCtrl'
-         })
-       .when('/', {
+                    };
+                },
+                providerId : function($route) {
+                    return $route.current.params.provider;
+                },
+                serverInfo : function(ServerInfoLoader) {
+                    return ServerInfoLoader();
+                }
+            },
+            controller : 'GenericClientStorageCtrl'
+        })
+        .when('/', {
             templateUrl : resourceUrl + '/partials/home.html',
             controller : 'HomeCtrl'
         })
@@ -1893,7 +1893,7 @@ module.config([ '$routeProvider', function($routeProvider) {
             },
             controller : 'RealmRevocationCtrl'
         })
-         .when('/realms/:realm/sessions/realm', {
+        .when('/realms/:realm/sessions/realm', {
             templateUrl : resourceUrl + '/partials/session-realm.html',
             resolve : {
                 realm : function(RealmLoader) {
@@ -2363,9 +2363,9 @@ module.config([ '$routeProvider', function($routeProvider) {
         .when('/server-info', {
             templateUrl : resourceUrl + '/partials/server-info.html',
             resolve : {
-            	serverInfo : function(ServerInfoLoader) {
-                return ServerInfoLoader();
-            	}
+                serverInfo : function(ServerInfoLoader) {
+                    return ServerInfoLoader();
+                }
             },
             controller : 'ServerInfoCtrl'
         })
@@ -3042,7 +3042,7 @@ module.controller('RoleSelectorModalCtrl', function($scope, realm, config, confi
         if ($scope.selectedClient) {
             ClientRole.query({realm: realm.realm, client: $scope.selectedClient.id}, function (data) {
                 $scope.clientRoles = data;
-             });
+            });
         } else {
             console.log('selected client was null');
             $scope.clientRoles = null;
@@ -3416,27 +3416,27 @@ module.filter('capitalize', function() {
  * See: http://www.2ality.com/2015/10/property-traversal-order-es6.html
  */
 module.filter('toOrderedMapSortedByKey', function(){
-   return function(input){
+    return function(input){
 
-       if(!input){
-           return input;
-       }
+        if(!input){
+            return input;
+        }
 
-       var keys = Object.keys(input);
+        var keys = Object.keys(input);
 
-       if(keys.length <= 1){
-           return input;
-       }
+        if(keys.length <= 1){
+            return input;
+        }
 
-       keys.sort();
+        keys.sort();
 
-       var result = {};
-       for (var i = 0; i < keys.length; i++) {
-           result[keys[i]] = input[keys[i]];
-       }
+        var result = {};
+        for (var i = 0; i < keys.length; i++) {
+            result[keys[i]] = input[keys[i]];
+        }
 
-       return result;
-   };
+        return result;
+    };
 });
 
 module.directive('kcSidebarResize', function ($window) {
@@ -3469,23 +3469,23 @@ module.directive('kcSidebarResize', function ($window) {
 
 
 module.directive('kcTooltip', function($compile) {
-        return {
-            restrict: 'E',
-            replace: false,
-            terminal: true,
-            priority: 1000,
-            link: function link(scope,element, attrs) {
-                var angularElement = angular.element(element[0]);
-                var tooltip = angularElement.text();
-                angularElement.text('');
-                element.addClass('hidden');
+    return {
+        restrict: 'E',
+        replace: false,
+        terminal: true,
+        priority: 1000,
+        link: function link(scope,element, attrs) {
+            var angularElement = angular.element(element[0]);
+            var tooltip = angularElement.text();
+            angularElement.text('');
+            element.addClass('hidden');
 
-                var label = angular.element(element.parent().children()[0]);
-                label.append(' <i class="fa fa-question-circle text-muted" tooltip="' + tooltip + '" tooltip-placement="right" tooltip-trigger="mouseover mouseout"></i>');
+            var label = angular.element(element.parent().children()[0]);
+            label.append(' <i class="fa fa-question-circle text-muted" tooltip="' + tooltip + '" tooltip-placement="right" tooltip-trigger="mouseover mouseout"></i>');
 
-                $compile(label)(scope);
-            }
-        };
+            $compile(label)(scope);
+        }
+    };
 });
 
 module.directive( 'kcOpen', function ( $location ) {
@@ -3592,18 +3592,18 @@ module.directive('kcPaging', function () {
 // Tests the page number input from currentPageInput to see
 // if it represents a valid page.  If so, the current page is changed.
 module.directive('kcValidPage', function() {
-   return {
-       require: 'ngModel',
-       link: function(scope, element, attrs, ctrl) {
-           ctrl.$validators.inRange = function(modelValue, viewValue) {
-               if (viewValue >= 1 && viewValue <= scope.numberOfPages) {
-                   scope.currentPage = viewValue;
-               }
+    return {
+        require: 'ngModel',
+        link: function(scope, element, attrs, ctrl) {
+            ctrl.$validators.inRange = function(modelValue, viewValue) {
+                if (viewValue >= 1 && viewValue <= scope.numberOfPages) {
+                    scope.currentPage = viewValue;
+                }
 
-               return true;
-           }
-       }
-   }
+                return true;
+            }
+        }
+    }
 });
 
 // Directive to parse/format strings into numbers
@@ -3669,7 +3669,7 @@ module.directive('kcPassword', function ($compile, Notifications) {
 
             var inputGroup = $('<div class="input-group"></div>');
             var eye = $('<span class="input-group-addon btn btn-default"><span class="fa fa-eye"></span></span>')
-                        .on('click', toggleMask);
+                .on('click', toggleMask);
 
             $scope.$watch(attr.ngModel, function(v) {
                 if (v && v == '**********') {
